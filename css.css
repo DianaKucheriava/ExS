@@ -354,20 +354,7 @@
 {
     width:300px;
 }
-* {
-		padding:0;
-		margin:0;
-	}
-	html, body {
-		height:100%;
-	}
-	
-	body {
-		font-family:sans-serif;
-	}
-	p {
-		margin:1em 0;
-	}
+
 	.skrollr-desktop body {
 		height:100% !important;
 	}
