@@ -477,4 +477,4 @@ Test.prototype.parseData = function(data)
         return false;
     }
 }
-
+$('.parallax-window').parallax({imageSrc: '01.jpg'});
