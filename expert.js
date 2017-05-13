@@ -1,8 +1,8 @@
 var testSystem;
 
 /**
- * Проверка доступности localStorage
- * @returns {boolean} true - браузер поддерживает LocalStorage
+ *Перевірка доступності localStorage
+ * @returns {boolean} true - браузер підтримує LocalStorage
  */
 function checkLocalStorage()
 {
@@ -14,7 +14,7 @@ function checkLocalStorage()
 }
 
 /**
- *  Загрузка тестов (пунктов меню) существующих в localStorage тестов
+ *  Завантаження тестів (пунктів меню) існуючих в localStorage тестів
  */
 function loadItemsFromLocalStorage()
 {
@@ -33,9 +33,10 @@ function loadItemsFromLocalStorage()
 }
 
 /**
- * Загрузка теста с localStorage
- * @param localStorageIndex - индекс теста
- * @returns {Test} тест (база знаний) для экспертной системы
+*Завантаження тесту з localStorage
+ * @param localStorageIndex – індекс тесту
+ * @returns {Test} тест (база знань) для експертної системи
+
  */
 function loadFromLocalStorage(localStorageIndex)
 {
@@ -43,8 +44,8 @@ function loadFromLocalStorage(localStorageIndex)
 }
 
 /**
- * Сохранение теста (базы знаний) в localStorage (при условии поддержки оного браузером)
- * @param test - сохраняемый тест (база знаний)
+ *Зберігання тесту (бази знань) в localStorage (при умові підтримки його браузером)
+ * @param test – тест що зберігається (база знань)
  */
 function saveToLocalStorage(test)
 {
@@ -64,7 +65,7 @@ function saveToLocalStorage(test)
 }
 
 /**
- * Реакция нажатия кнопки "далее". реакция на ввод данных и переход к следующему вопросу
+ * Реакція натискання кнопки «далі», введення даних і перехід до наступного питання
  */
 function step()
 {
@@ -78,13 +79,13 @@ function step()
 }
 
 /**
- * Инициализация. Реакция на кнопки  и т.п.
+ * Ініціалізація
  */
 function init()
 {
     loadItemsFromLocalStorage();
     /**
-     * Выбор теста. Его загрузка с localStorage, либо парсинг с textarea
+          * Вибір тесту. Його завантаження з localStorage, або парсинг з textarea
      */
     $("#start-test").bind("click keypress",function()
     {
@@ -113,7 +114,7 @@ function init()
     });
 
     /**
-     * Enter == кнопки далее при вводе вероятности
+         * Enter == кнопка далі при введені імовірності
      */
     $("#current-answer").bind('keydown ',function(e)
     {
@@ -122,7 +123,7 @@ function init()
     $("#complete-answer").bind("click keypress", step);
 
     /**
-     * визуализация выбора теста
+    * візуалізація вибору тесту
      */
     $(".b-page-test-switch__item").live("click keypress", function()
     {
@@ -276,8 +277,8 @@ function init()
 window.onload = init;
 
 /**
- *  Сортировка вероятностей. Сравнение двух items
- * @returns {number} сравнение
+  *  Сортування ймовірностей. Порівняння двох items
+ * @returns {number} порівняння
  */
 function sortItems(a,b)
 {
@@ -288,7 +289,7 @@ function sortItems(a,b)
 
 
 /**
- * сравнение двух объектов - вопросов
+ * порівняння двох об’єктів - питань
  */
 function sortQuestion(a,b)
 {
@@ -314,9 +315,9 @@ function sortQuestion(a,b)
 }
 
 /**
- * База знаний или тест.
- * @param testObject - конструктор с уже введенных названий, вариантов и вопросов
- * @constructor
+  * База знань або тест
+ * @param testObject - конструктор з вже введеними назвами, варіантів і питань
+
  */
 function Test(testObject)
 {
@@ -335,8 +336,8 @@ function Test(testObject)
 }
 
 /**
- * сериализация в строку, формата JSON
- * @returns {String} JSON
+  * серіалізація в рядок, формату JSON
+ * @returns {String} JSON	
  */
 Test.prototype.stringify = function()
 {
@@ -348,7 +349,7 @@ Test.prototype.stringify = function()
 }
 
 /**
- * Вывод "вероятностей" ответов по заданному шаблону
+ * Вивід "ймовірностей" відповідей по заданому шаблону
  */
 Test.prototype.printData = function()
 {
@@ -368,7 +369,7 @@ Test.prototype.printData = function()
 }
 
 /**
- * Переход к следующему вопросу
+ * перехід до наступного питання
  */
 Test.prototype.nextStep = function()
 {
@@ -386,8 +387,9 @@ Test.prototype.nextStep = function()
 };
 
 /**
- * обработка ответа. Измненение вероятности события по ответу
- * @param ans  - ответ (вероятность, от 0 до 100)
+  * обработка відповіді. Зміна ймовірності події по відповіді
+ * @param ans  - відповідь (ймовірність, от 0 до 100)
+
  */
 Test.prototype.processAnswer = function(ans)
 {
@@ -407,15 +409,16 @@ Test.prototype.processAnswer = function(ans)
 }
 
 /**
- * Получение вопросов, событий и вероятностей с строки
- * @param data - строка, содержащая данные
- * @returns {boolean} успех обработки строки
+  * Отримання питань, подій і ймовірностей з рядку
+ * @param data - рядок, що містить дані
+ * @returns {boolean} успіх обробки рядку
+
  */
 Test.prototype.parseData = function(data)
 {
     try
     {
-        //Пропуск лишних, пустых строк
+        //Пропуск зайвих порожніх рядків
         var passEmptyStrings = function() {
             while (position < items.length && items[position] == "" ) { position++; }
         }
@@ -425,7 +428,7 @@ Test.prototype.parseData = function(data)
         passEmptyStrings();
         this.title = items[position++];
         passEmptyStrings();
-        //Ввод вопросов
+        //Введення питань
         while (items.length > position && items[position] != "")
         {
             this.questions.push({
@@ -439,7 +442,7 @@ Test.prototype.parseData = function(data)
         passEmptyStrings();
 
         var index = 0;
-        //Ввод событий
+        //Введення подій
         while (items.length > position && items[position] != "")
         {
             var  pointItems = items[position + 1].split(" ");
@@ -449,7 +452,7 @@ Test.prototype.parseData = function(data)
                 index          : index,
                 questionPoints : []
             };
-            //Вероятности событий при 100 и 0% вероятностях ответа на вопрос
+         //Ймовірності подій при 100 і 0% ймовірності відповіді на питання
             for (var i = 1; i < pointItems.length; i+= 3)
             {
                 while (pointItems[i] == "") i++;
